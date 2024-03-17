@@ -32,15 +32,22 @@ nav {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 400px;
-    padding: 2rem;
+    padding: 4rem;
 }
 
 .nav_logo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: left;
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text-dark);
     text-decoration: none;
+}
+
+.nav_logo img{
+    height: 60px;
 }
 
 .container {
