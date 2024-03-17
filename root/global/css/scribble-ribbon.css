@@ -7,6 +7,7 @@
     background-color: var(--primary-color);
     color: white;
     text-align: center;
+    font-weight: 400;
     line-height: 50px;
     z-index: 1000;
 }
@@ -20,6 +21,7 @@
 
 #ribbon-link:hover {
     text-decoration: underline;
+    transition: .5s;
 }
 
 :root {
@@ -30,4 +32,5 @@
     --text-dark: #333333;
     --text-light: #767268;
     --extra-light: #ffffff;
+    --blue-dark: #0277ED;
 }
