@@ -1,4 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+.container {
+    max-width: 400px;
+    padding: 2rem;
+    margin: auto;
+    display: grid;
+    color: var(--text-dark);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.header h1 {
+    font-size: 4rem;
+    font-weight: 900;
+}
+
+.container h3 {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.container img {
+    width: 100%;
+    max-width: 300px;
+    margin: auto
+}
+
+.footer {
+    display: grid;
+    gap: 2rem;
+    place-content: baseline;
+}
+
+.footer p {
+    font-variation-settings: 1rem;
+    text-align: center;
+}
+
+.footer button {
+    padding: 1rem;
+    outline: none;
+    border: 1px solid var(--dark);
+    border-radius: 35px; /* 60px */
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light);
+    background-color: var(--color-button-background);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+
+.footer button:hover {
+    background-color: var(--color-button-background-hover);
+    text-decoration: none;
+    padding: 1rem;
+    outline: none;
+    border: 1px solid white;
+    border-radius: 60px;
+};
+
+@media (min-width: 640px) {
+    nav {
+        max-width: 1000px;
+    }
+    .container {
+        max-width: 1200px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    .container img {
+        max-width: 550px;
+        grid-area: 1/1/3/2;
+    }
+    .footer {
+        max-width: 300px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        column-gap: 5rem
+    }
+    .header h1 {
+        font-size: 6rem;
+    }
+    .header h3 {
+        font-size: 2.5rem;
+    }
+}
 
 :root {
     --dark: #212121;
@@ -92,84 +184,4 @@
     --color-aside-warning: var(--color-figure-red);
     --color-aside-warning-background: var(--color-fill-red-secondary);
     --color-aside-warning-border: var(--color-figure-red);
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    height: 100vh;
-    padding-top: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--light);
-    font-family: -apple-system, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-}
-
-.button {
-    padding: 1rem;
-    outline: none;
-    border: 1px solid var(--dark);
-    border-radius: 35px; /* 60px */
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--light);
-    background-color: var(--color-button-background);
-    cursor: pointer;
-    transition: .5s;
-    text-decoration: none;
-}
-
-.button:hover {
-    background-color: var(--color-button-background-hover);
-    text-decoration: none;
-    padding: 1rem;
-    outline: none;
-    border: 1px solid white;
-    border-radius: 60px;
-}
-
-/* FIXME: When removing this css the img on the pre-realese page will break*/
-.footer button:hover {
-    background-color: var(--color-button-background-hover);
-    text-decoration: none;
-    padding: 1rem;
-    outline: none;
-    border: 1px solid white;
-    border-radius: 60px;
-};
-
-
-@media (min-width: 640px) {
-    nav {
-        max-width: 1000px;
-    }
-    .container {
-        max-width: 1200px;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
-    .container img {
-        max-width: 550px;
-        grid-area: 1/1/3/2;
-    }
-    .footer {
-        max-width: 300px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .container {
-        column-gap: 5rem
-    }
-    .header h1 {
-        font-size: 6rem;
-    }
-    .header h3 {
-        font-size: 2.5rem;
-    }
 }

@@ -3,27 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="root/pages/404/style.css">
+
+    <link rel="stylesheet" href="root/global/css/style.css">
+    <link rel="stylesheet" href="root/global/css/homepage.css">
+    <link rel="stylesheet" href="root/global/css/scribble-navigation-bar.css">
+    <link rel="stylesheet" href="root/global/css/scribble-ribbon.css">
+    
     <link rel="icon" href="root/resources/images/logo-dark-simple.png">
+
     <title>ScribbleLabApp</title>
 </head>
 <body>
+    <noscript>You need to enable javascript in order to view this website</noscript>
+    <!-- TODO: 
+        - Transparent nav bar
+        - Divider
+        - Add navigator
+        - Add Download button
+    -->
+
+    <div id="notice-ribbon">
+        <p>
+            Currently in development, 
+            <a id="ribbon-link" href="https://github.com/orgs/ScribbleLabApp/porjects/1/view/2">check out the roadmap.</a>
+        </p>
+    </div>
     <nav>
-        <div class="nav_logo">
-            ScribbleLabApp
-            <!--<img src="root/resources/images/logo-light-complex.png" alt="logo">-->
-        </div>
+        <a id="nav_logo_link" href="index.html">
+            <div class="nav_logo">
+                <img src="root/resources/images/logo-dark-simple-1.svg" alt="logo">
+                <p>ScribbleLabApp</p>
+            </div>
+        </a>
     </nav>
     <div class="container">
         <div class="header">
-            <h1>404</h1>
-            <h3>Page Not Found!</h3>
+            <h3>Page In <span>Development</span>!</h3>
         </div>
-        <img src="root/resources/images/2203_w037_n003_233b_p1_233.jpg" alt="not found">
+        <img src="root/resources/images/2203_w037_n003_233b_p1_233.jpg" alt="hero image">
         <div class="footer">
-            <p>We're sorry, the page you requested could not be found. Please go back to the homepage</p>
-            <button>Go Home</button>
+            <p>We're sorry, but this page is currently in development. You'll be soon able to visit this page. Please go back to the homepage</p>
+            <button class="btn">Go Home</button>
         </div>
     </div>
 </body>
+<footer>
+    <script src="script.js"></script>
+</footer>
 </html>
