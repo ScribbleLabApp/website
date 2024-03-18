@@ -1,15 +1,23 @@
 nav {
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    padding: 4rem;
+    padding-top: 4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-bottom: 1rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 1px 1px #d6d6d6;
 }
 
 .nav_logo {
     display: flex;
-    width: 100%;
+    width: fit-content;
     align-items: center;
     justify-content: left;
     font-size: 1.3rem;
@@ -24,6 +32,44 @@ nav {
 
 #nav_logo_link {
     text-decoration: none;
+}
+
+#nav-bar-menu ul{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+#nav-bar-menu li{
+    padding-left: 1.5rem;
+}
+
+#nav-bar-menu a {
+    text-decoration: none;
+    color: var(--dark);
+}
+
+.download-button {
+    padding: 1rem;
+    outline: none;
+    border: 1px solid var(--light);
+    border-radius: 35px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light);
+    background-color: var(--color-button-background);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+
+.download-button:hover {
+    background-color: var(--color-button-background-hover);
+    text-decoration: none;
+    padding: 1rem;
+    outline: none;
+    border: 1px solid white;
+    border-radius: 60px;
 }
 
 :root {
