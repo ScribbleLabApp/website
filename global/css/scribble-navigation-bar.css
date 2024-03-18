@@ -1,5 +1,5 @@
 nav {
-    position: absolute;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -7,12 +7,13 @@ nav {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    padding-top: 4rem;
+    padding-top: 3.2rem;
     padding-left: 4rem;
     padding-right: 4rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.2rem;
     backdrop-filter: blur(5px);
-    box-shadow: 1px 1px #d6d6d6;
+    border-bottom: 1px solid #d6d6d6;
+    border-top: 1px solid #d6d6d6;
 }
 
 .nav_logo {
@@ -47,6 +48,17 @@ nav {
 #nav-bar-menu a {
     text-decoration: none;
     color: var(--dark);
+}
+
+#nav_link {
+    text-decoration: none;
+    transition: .5s;
+}
+
+#nav_link:hover {
+    text-decoration: underline;
+    color: var(--color-button-background);
+    transition: .5s;
 }
 
 .download-button {
