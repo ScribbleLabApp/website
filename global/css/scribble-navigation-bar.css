@@ -55,12 +55,6 @@ nav {
     transition: .5s;
 }
 
-#nav_link:hover {
-    text-decoration: underline;
-    color: var(--color-button-background);
-    transition: .5s;
-}
-
 .download-button {
     padding: 1rem;
     outline: none;
