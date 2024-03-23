@@ -1,3 +1,13 @@
+body {
+    height: 100vh;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light);
+    font-family: -apple-system, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -51,6 +61,7 @@
 }
 
 .alternatives-btn {
+    width: 100%;
     padding: 0.85rem;
     outline: none;
     border: 1px solid #CCC;
