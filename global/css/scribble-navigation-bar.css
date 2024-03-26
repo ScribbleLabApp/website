@@ -77,6 +77,47 @@ nav {
     border: 1px solid white;
     border-radius: 60px;
 }
+.drop-down-svg {
+    display: none; 
+}
+@media only screen and (max-width: 768px) {
+    nav {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    #nav_link {
+        display: none;
+    }
+    .drop-down {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .nav_logo {
+        display: flex; 
+        align-items: center;
+        font-size: 12px; 
+    }
+    .nav_logo img {
+        max-height: 50px; 
+        margin-right: 10px; 
+    }
+    .download-button {
+        padding: 10px;
+        font-size: 12px;
+    }
+    .download-button:hover {
+        padding: 10px;
+    }
+    .drop-down img {
+        display: block;
+        width: 1rem;
+        margin-right: -32px;
+    }
+    #notice-ribbon{
+        font-size: 12px;
+    }
+}
 
 :root {
     --dark: #212121;
