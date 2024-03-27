@@ -106,9 +106,41 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     background-color: var(--light);
     font-family: -apple-system, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
+
+footer {
+    background-color: #F5F5F7; /* Background color */
+    padding: 20px; /* Add padding for the footer content */
+    text-align: center; /* Center-align footer content */
+    margin-top: auto; /* Push footer to the bottom */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.social-icons {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px; /* Add margin between social icons and footer text */
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px; /* Add margin between social icons */
+}
+
+.social-icons li:last-child {
+    margin-right: 0; /* Remove margin for last social icon */
+}
+
+.social-icons a {
+    color: #333;
+    text-decoration: none;
+    font-size: 24px;
+}
+
 
 .button {
     padding: 1rem;
