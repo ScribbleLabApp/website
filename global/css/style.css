@@ -106,9 +106,41 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     background-color: var(--light);
     font-family: -apple-system, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
+
+footer {
+    background-color: #F5F5F7; /* Background color */
+    padding: 20px; /* Add padding for the footer content */
+    text-align: center; /* Center-align footer content */
+    margin-top: auto; /* Push footer to the bottom */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.social-icons {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px; /* Add margin between social icons and footer text */
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px; /* Add margin between social icons */
+}
+
+.social-icons li:last-child {
+    margin-right: 0; /* Remove margin for last social icon */
+}
+
+.social-icons a {
+    color: #333;
+    text-decoration: none;
+    font-size: 24px;
+}
+
 
 .button {
     padding: 1rem;
@@ -131,6 +163,46 @@ body {
     outline: none;
     border: 1px solid white;
     border-radius: 60px;
+}
+
+.btn_secondary {
+    padding: 1rem;
+    outline: none;
+    border: 1px solid var(--dark);
+    border-radius: 35px; /* 60px */
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark);
+    background-color: var(--light);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+
+.btn_secondary:hover {
+    padding: 1rem;
+    outline: none;
+    border: 1px solid var(--light);
+    border-radius: 35px; /* 60px */
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light);
+    background-color: var(--dark);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+
+.textfield {
+    padding: 0.85rem;
+    outline: none;
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 /* FIXME: When removing this css the img on the pre-realese page will break*/

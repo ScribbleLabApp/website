@@ -4,6 +4,7 @@
     margin: auto;
     display: grid;
     color: var(--text-dark);
+    padding-top: 5rem;
 }
 
 .header {
