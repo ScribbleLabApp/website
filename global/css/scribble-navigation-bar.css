@@ -48,6 +48,12 @@ nav {
 #nav-bar-menu a {
     text-decoration: none;
     color: var(--dark);
+    transition: .5s;
+}
+
+#nav-bar-menu a:hover {
+    color: #FD7C0F;
+    transition: .5s;
 }
 
 #nav_link {
