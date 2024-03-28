@@ -3,29 +3,28 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /*
-    top: 0;
-    left: 50%;
-    */
+
     transform: translateX(-50%);
     width: 100%;
     
     padding-left: 4rem;
     padding-right: 4rem;
     padding-bottom: 0.2rem;
+
     backdrop-filter: blur(5px);
     left: 50%;
 }
 
 .main-nav {
     padding-top: 3.2rem;
+    
     top: 0;
+
     border-bottom: 1px solid #d6d6d6;
     border-top: 1px solid #d6d6d6;
 }
 
 .secondary-nav {
-    position: fixed;
     position: relative;
     top: 4.18rem;
     display: flex;
