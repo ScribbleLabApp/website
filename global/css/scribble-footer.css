@@ -165,7 +165,7 @@ footer {
 .social-icons a {
     color: #707474; /*#333*/
     text-decoration: none;
-    font-size: 24px;
+    font-size: 22px; /*24px*/
     transition: .5s;
 }
 

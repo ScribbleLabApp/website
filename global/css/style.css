@@ -108,7 +108,7 @@ body {
     justify-content: center;
     flex-direction: column;
     background-color: var(--light);
-    font-family: -apple-system, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-family: -apple-system, system-ui, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
 .button {
@@ -200,6 +200,9 @@ body {
     }
     .footer {
         max-width: 300px;
+    }
+    footer {
+        max-width: 1000px;
     }
 }
 
