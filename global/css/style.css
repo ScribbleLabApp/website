@@ -135,7 +135,7 @@ body {
 }
 
 .btn_secondary {
-    padding: 1rem;
+    padding: 0.7rem; /*1rem*/
     outline: none;
     border: 1px solid var(--dark);
     border-radius: 35px; /* 60px */

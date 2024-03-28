@@ -26,6 +26,42 @@ nav {
 .secondary-nav {
     top: 2;
     left: 50%;
+
+    position: relative;
+    top: 5.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: #fff; 
+}
+
+.contact_us {
+    padding: 0.7rem; /*1rem*/
+    outline: none;
+    border: 1px solid var(--dark);
+    border-radius: 35px; /* 60px */
+    font-size: 1rem;
+    font-weight: 550;
+    color: var(--dark);
+    background-color: var(--light);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+
+.contact_us:hover {
+    padding: 0.7rem;
+    outline: none;
+    border: 1px solid var(--light);
+    border-radius: 35px; /* 60px */
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light);
+    background-color: var(--dark);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
 }
 
 .nav_logo {
