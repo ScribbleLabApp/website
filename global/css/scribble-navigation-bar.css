@@ -9,31 +9,33 @@ nav {
     */
     transform: translateX(-50%);
     width: 100%;
-    padding-top: 3.2rem;
+    
     padding-left: 4rem;
     padding-right: 4rem;
     padding-bottom: 0.2rem;
     backdrop-filter: blur(5px);
+    left: 50%;
+}
+
+.main-nav {
+    padding-top: 3.2rem;
+    top: 0;
     border-bottom: 1px solid #d6d6d6;
     border-top: 1px solid #d6d6d6;
 }
 
-.main-nav {
-    top: 0;
-    left: 50%;
-}
-
 .secondary-nav {
-    top: 2;
-    left: 50%;
-
+    position: fixed;
     position: relative;
-    top: 5.2rem;
+    top: 4.18rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    color: #fff; 
+    color: #fff;
+    /**flex-direction: column;**/
+    padding-top: 0.5rem;
+    border-bottom: 1px solid #d6d6d6;
 }
 
 .nav_logo {
