@@ -119,3 +119,8 @@
     transition: .5s;
     text-decoration: none;
 }
+
+.overview-hero {
+    background-color: #F3F3F3; /*111717*/
+    width: 100%;
+}
