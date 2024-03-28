@@ -111,6 +111,15 @@ body {
     font-family: -apple-system, system-ui, 'SF Pro Text', 'SF Pro Icons', 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
+noscript {
+    background-color: var(--color-button-background);
+    color: #000;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
 .button {
     padding: 1rem;
     outline: none;
