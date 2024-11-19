@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
@@ -13,6 +12,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react"; // Assuming you are using lucide-react for icons, or you can use any other icon library
 
 const products = [
   { title: "ScribbleLab", href: "", description: "A versatile tool for everyday tasks." },
@@ -67,6 +67,8 @@ const ListItem = React.forwardRef<
 ListItem.displayName = "ListItem";
 
 export function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false); // State for mobile menu visibility
+
   return (
     <header className="sticky top-0 z-40 w-full bg-background border-b border-border">
       <div className="container mx-auto flex items-center justify-between p-4">
@@ -75,7 +77,15 @@ export function Navbar() {
           ScribbleLabApp
         </Link>
 
-        {/* Nav Links */}
+        {/* Mobile Hamburger Button */}
+        <button
+          className="md:hidden text-foreground hover:text-primary"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        {/* Nav Links (Desktop and iPad+ Sizes) */}
         <nav className="hidden md:flex space-x-4">
           <NavigationMenu>
             <NavigationMenuList>
@@ -169,6 +179,44 @@ export function Navbar() {
           </Button>
         </div>
       </div>
+
+      {/* Mobile Menu (iPad and smaller devices) */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-background border-t border-border">
+          <nav className="flex flex-col space-y-2 p-4">
+            <Link href="/products" className="text-sm font-medium text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+              Products
+            </Link>
+            <Link href="/learn" className="text-sm font-medium text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+              Learn
+            </Link>
+            <Link href="/pricing" className="text-sm font-medium text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+              Pricing
+            </Link>
+            <Link href="/developer" className="text-sm font-medium text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+              Developer
+            </Link>
+            <Link href="/support" className="text-sm font-medium text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+              Support
+            </Link>
+            <Link href="/account" className="text-sm font-medium text-foreground hover:text-primary" onClick={() => setIsMenuOpen(false)}>
+              Account
+            </Link>
+            <div className="flex space-x-2 mt-4">
+              <Button variant="outline" asChild>
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  Login
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
+                  Sign Up
+                </Link>
+              </Button>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
