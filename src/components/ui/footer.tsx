@@ -1,113 +1,136 @@
-"use client"
+"use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { ThemeSelector } from "./theme-selector";
+import { LanguageSelector } from "./language-selector";
 import Link from "next/link";
+import { FaGithub, FaInstagram, FaYoutube, FaTwitter, FaTiktok, FaLinkedin } from "react-icons/fa";
 
 export function Footer() {
-    {/* Theme logic */}
-    const [theme, setTheme] = useState<"light" | "dark" | "auto">("auto");
-    const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTheme(event.target.value as "light" | "dark" | "auto");
-        // Handle the actual theme change logic here
-    };
+  const quickLinks = [
+    {
+      category: "Company",
+      links: [
+        { name: "About Us", href: "/about" },
+        { name: "Press & Media", href: "/press" },
+        { name: "Blog", href: "/blog" },
+        { name: "Contact Us", href: "/contact" },
+      ],
+    },
+    {
+      category: "Resources",
+      links: [
+        { name: "Documentation", href: "/documentation" },
+        { name: "API Reference", href: "/api-reference" },
+        { name: "FAQs", href: "/faqs" },
+        { name: "Accessibility", href: "/accessibility" },
+      ],
+    },
+    {
+      category: "Community",
+      links: [
+        { name: "Discord", href: "/discord" },
+        { name: "Forums", href: "/forums" },
+        { name: "Open Source", href: "/opensource" },
+      ],
+    },
+    {
+      category: "Products",
+      links: [
+        { name: "ScribbleLab", href: "/products/scribblelab" },
+        { name: "ScribbleLab Pro", href: "/products/scribblelab-pro" },
+        { name: "ScribbleLab for Teams", href: "/products/teams" },
+        { name: "Compare Plans", href: "/products/compare-plans" },
+        { name: "Get Started with ScribbleLab", href: "/products/get-started" },
+      ],
+    },
+    {
+      category: "Support",
+      links: [
+        { name: "Help Center", href: "/help-center" },
+        { name: "Troubleshooting", href: "/troubleshooting" },
+        { name: "Report a Bug", href: "/report-bug" },
+        { name: "Feature Requests", href: "/feature-requests" },
+      ],
+    },
+    {
+      category: "Legal",
+      links: [
+        { name: "Terms of Use", href: "/legal/terms" },
+        { name: "Privacy Policy", href: "/legal/privacy" },
+        { name: "Cookie Policy", href: "/legal/cookie-policy" },
+        { name: "Licensing", href: "/legal/licensing" },
+        { name: "Security", href: "/legal/security" },
+      ],
+    },
+    {
+      category: "Showcase",
+      links: [
+        { name: "Customer Stories", href: "/showcase/customer-stories" },
+        { name: "Case Studies", href: "/showcase/case-studies" },
+        { name: "Featured Projects", href: "/showcase/projects" },
+        { name: "Design Gallery", href: "/showcase/design-gallery" },
+      ],
+    },
+  ];
 
   return (
-    <footer className="bg-background text-foreground  mt-12  w-full">
-        {/* Separator */}
-        <hr className="my-4 border-t-2 border-muted-foreground" />
-
-        <div className="container mx-auto px-4">
-        {/* Legal Links */}
-        <div className="text-center text-sm text-muted-foreground mb-6">
-          <Link href="/privacy-policy" className="hover:underline">
-            Privacy Policy
-          </Link>{" "}
-          |{" "}
-          <Link href="/terms-of-service" className="hover:underline">
-            Terms of Service
-          </Link>{" "}
-          |{" "}
-          <Link href="/cookies" className="hover:underline">
-            Cookies
-          </Link>
+    <footer className="bg-gray-100 dark:bg-neutral-900 text-foreground mt-12 w-full">
+      <div className="container mx-auto px-4 py-8">
+        {/* Quick Links Section */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {quickLinks.map((category) => (
+            <div key={category.category}>
+              <h3 className="text-lg font-semibold mb-2">{category.category}</h3>
+              <ul className="space-y-2">
+                {category.links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary hover:underline"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Language & Country Selector */}
-        <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground">
-          <div>English (US)</div>
-          <div className="text-gray-500">© 2024 ScribbleLab, LLC - All rights reserved.</div>
-        </div>
-
-        {/* Theme Picker (Slider-like Element) */}
-        <div className="flex justify-center items-center gap-4 mt-6">
-          {/* Slider container */}
-          <div className="relative flex items-center rounded-full bg-gray-200 w-56 h-12">
-            {/* Option labels */}
-            <label
-              htmlFor="light"
-              className={`absolute left-0 top-0 bottom-0 flex items-center justify-center w-1/3 text-sm font-medium cursor-pointer transition-all duration-300 rounded-full ${
-                theme === "light" ? "bg-orange-500 text-white" : "text-gray-500"
-              }`}
-            >
-              Light
-            </label>
-            <label
-              htmlFor="dark"
-              className={`absolute left-1/3 top-0 bottom-0 flex items-center justify-center w-1/3 text-sm font-medium cursor-pointer transition-all duration-300 rounded-full ${
-                theme === "dark" ? "bg-orange-500 text-white" : "text-gray-500"
-              }`}
-            >
-              Dark
-            </label>
-            <label
-              htmlFor="auto"
-              className={`absolute right-0 top-0 bottom-0 flex items-center justify-center w-1/3 text-sm font-medium cursor-pointer transition-all duration-300 rounded-full ${
-                theme === "auto" ? "bg-orange-500 text-white" : "text-gray-500"
-              }`}
-            >
-              Auto
-            </label>
-
-            {/* Slider indicator */}
-            <div
-              className={`absolute top-0 left-0 bottom-0 bg-orange-500 transition-all duration-300 rounded-full ${
-                theme === "light"
-                  ? "w-1/3"
-                  : theme === "dark"
-                  ? "w-1/3 left-1/3"
-                  : "w-1/3 right-0"
-              }`}
-            ></div>
+        {/* Language Selector and Social Media Links Section */}
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 mt-8">
+          <LanguageSelector />
+          <div className="flex gap-4 text-lg">
+            <Link href="https://github.com" aria-label="GitHub">
+              <FaGithub />
+            </Link>
+            <Link href="https://instagram.com" aria-label="Instagram">
+              <FaInstagram />
+            </Link>
+            <Link href="https://youtube.com" aria-label="YouTube">
+              <FaYoutube />
+            </Link>
+            <Link href="https://twitter.com" aria-label="Twitter">
+              <FaTwitter />
+            </Link>
+            <Link href="https://tiktok.com" aria-label="TikTok">
+              <FaTiktok />
+            </Link>
+            <Link href="https://linkedin.com" aria-label="LinkedIn">
+              <FaLinkedin />
+            </Link>
           </div>
-          {/* Hidden radio buttons for accessibility */}
-          <input
-            type="radio"
-            name="theme"
-            id="light"
-            value="light"
-            checked={theme === "light"}
-            onChange={handleThemeChange}
-            className="hidden"
-          />
-          <input
-            type="radio"
-            name="theme"
-            id="dark"
-            value="dark"
-            checked={theme === "dark"}
-            onChange={handleThemeChange}
-            className="hidden"
-          />
-          <input
-            type="radio"
-            name="theme"
-            id="auto"
-            value="auto"
-            checked={theme === "auto"}
-            onChange={handleThemeChange}
-            className="hidden"
-          />
+        </div>
+
+        <hr className="my-3 border-t border-muted-foreground" />
+
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+          {/* Copyright and Theme Selector */}
+          <div className="flex flex-col md:flex-row md:items-center gap-4 text-sm text-muted-foreground">
+            <span>© 2024 ScribbleLab LLC. All rights reserved.</span>
+          </div>
+          <ThemeSelector />
         </div>
       </div>
     </footer>

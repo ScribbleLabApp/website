@@ -12,11 +12,11 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react"; // Assuming you are using lucide-react for icons, or you can use any other icon library
+import { Menu, X } from "lucide-react";
 
 const products = [
-  { title: "ScribbleLab", href: "", description: "A versatile tool for everyday tasks." },
-  { title: "ScribbleLink", href: "", description: "Advanced collaboration for professionals." },
+  { title: "ScribbleLab", href: "", description: "A powerful note-taking app that's features goes way beyond." },
+  { title: "ScribbleLink", href: "", description: "Advanced planning tools for students and professionals." },
 ];
 
 const learn = [
@@ -25,8 +25,9 @@ const learn = [
 ];
 
 const pricing = [
-  { title: "Basic", href: "", description: "Access ScribbleLab for free with core features." },
+  { title: "Starter", href: "", description: "Access ScribbleLab for free with core features." },
   { title: "Premium", href: "", description: "Unlock advanced tools and priority support." },
+  { title: "Organizations", href: "", description: "For teams in large organizations who want to scale their notes and planning while optimizing costs." },
   { title: "ScribbleLab for Students", href: "", description: "Exclusive pricing for verified students." },
 ];
 
@@ -34,6 +35,7 @@ const developer = [
   { title: "API Reference", href: "/developer/api", description: "Access detailed API documentation." },
   { title: "Developer Tools", href: "/developer/tools", description: "Enhance productivity with developer utilities." },
   { title: "Developer Documentation", href: "", description: "Comprehensive developer-specific guides." },
+  { title: "Development Forum", href: "", description: "Get in touch with our development community and ask questions related to our API or frameworks." },
 ];
 
 const support = [
@@ -67,7 +69,7 @@ const ListItem = React.forwardRef<
 ListItem.displayName = "ListItem";
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false); // State for mobile menu visibility
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background border-b border-border">
@@ -171,11 +173,19 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center space-x-2">
-          <Button variant="outline" asChild>
-            <Link href="/login">Login</Link>
+          {/* Sign Up Button */}
+          <Button variant="outline" asChild className="rounded-full border border-solid border-black/[.08] dar:border-white/[.145] transition-all duration-300 ease-in-out">
+            <Link href="/auth?option=signup">Sign Up</Link>
           </Button>
-          <Button asChild>
-            <Link href="/signup">Sign Up</Link>
+
+          {/* Download Button */}
+          <Button
+            asChild
+            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-all 
+                       duration-300 ease-in-out flex items-center justify-center text-sm h-8 sm:h-10 px-3 sm:px-4 
+                       bg-orange-500 text-white hover:bg-black hover:text-[#f2f2f2]"
+          >
+            <Link href="/download">Download</Link>
           </Button>
         </div>
       </div>
@@ -204,13 +214,13 @@ export function Navbar() {
             </Link>
             <div className="flex space-x-2 mt-4">
               <Button variant="outline" asChild>
-                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                  Login
+                <Link href="/sign-up" onClick={() => setIsMenuOpen(false)}>
+                  Sign Up
                 </Link>
               </Button>
               <Button asChild>
-                <Link href="/signup" onClick={() => setIsMenuOpen(false)}>
-                  Sign Up
+                <Link href="/download" onClick={() => setIsMenuOpen(false)}>
+                  Download
                 </Link>
               </Button>
             </div>
