@@ -1,73 +1,76 @@
-"use client";
+'use client';
 
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Navbar } from "@/components/ui/navbar";
-import { ToastProvider } from "@/components/ui/toast";
-import { useToast } from "@/hooks/use-toast";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { FaApple, FaGoogle } from "react-icons/fa";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Navbar } from '@/components/ui/navbar';
+import { ToastProvider } from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { FaApple, FaGoogle } from 'react-icons/fa';
 
-// Import Firebase models
-import { signUp, logIn, getCurrentUser } from "@/lib/models/auth";
-import { saveUserToFirestore } from "@/lib/models/user";
+import { signUp, logIn, getCurrentUser } from '@/lib/models/auth';
+import { saveUserToFirestore } from '@/lib/models/user';
 
 export default function AuthPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const option = searchParams.get("option") || "login";
+  const option = searchParams.get('option') || 'login';
 
-  // Toast hook for showing success/error messages
   const { toast } = useToast();
 
-  // State for Login and Signup
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(
+    null
+  );
 
-  // Validation Errors
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const [invalidFileType, setInvalidFileType] = useState(false);
 
-  // Validation Functions
   const validateEmail = (value: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    setEmailError(emailRegex.test(value) ? "" : "Please enter a valid email address.");
+    setEmailError(
+      emailRegex.test(value) ? '' : 'Please enter a valid email address.'
+    );
   };
 
   const validatePassword = (value: string) => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     setPasswordError(
       passwordRegex.test(value)
-        ? ""
-        : "Password must be at least 8 characters, include an uppercase letter, a number, and a special character."
+        ? ''
+        : 'Password must be at least 8 characters, include an uppercase letter, a number, and a special character.'
     );
   };
 
   const validateConfirmPassword = (value: string) => {
-    setConfirmPasswordError(value === password ? "" : "Passwords do not match.");
+    setConfirmPasswordError(
+      value === password ? '' : 'Passwords do not match.'
+    );
   };
 
   const validateUsername = (value: string) => {
-    setUsernameError(value.length >= 3 ? "" : "Username must be at least 3 characters long.");
+    setUsernameError(
+      value.length >= 3 ? '' : 'Username must be at least 3 characters long.'
+    );
   };
 
-  // Handlers
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
@@ -80,7 +83,9 @@ export default function AuthPage() {
     validatePassword(value);
   };
 
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = e.target.value;
     setConfirmPassword(value);
     validateConfirmPassword(value);
@@ -96,7 +101,7 @@ export default function AuthPage() {
     const file = e.target.files?.[0] || null;
     if (file) {
       const fileType = file.type;
-      if (fileType === "image/png" || fileType === "image/jpeg") {
+      if (fileType === 'image/png' || fileType === 'image/jpeg') {
         setProfileImage(file);
 
         const reader = new FileReader();
@@ -118,59 +123,58 @@ export default function AuthPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    // Perform validation
+
     validateEmail(email);
     validatePassword(password);
-    if (option === "signup") validateConfirmPassword(confirmPassword);
-    if (option === "signup") validateUsername(username);
-  
+    if (option === 'signup') validateConfirmPassword(confirmPassword);
+    if (option === 'signup') validateUsername(username);
+
     if (emailError || passwordError || confirmPasswordError || usernameError) {
       toast({
-        title: "Validation Error",
-        description: "Please fix the errors in the form.",
-        variant: "destructive",
+        title: 'Validation Error',
+        description: 'Please fix the errors in the form.',
+        variant: 'destructive',
       });
       return;
     }
-  
+
     try {
       let user;
-      if (option === "login") {
-        // Login flow
+      if (option === 'login') {
         const userCredential = await logIn(email, password);
-        user = userCredential.user;
-      } else if (option === "signup") {
-        // Signup flow
+        if (userCredential) {
+          user = userCredential.user;
+        }
+      } else if (option === 'signup') {
         const userCredential = await signUp(email, password);
-        user = userCredential.user;
+        if (userCredential) {
+          user = userCredential.user;
+        }
       }
-  
-      // Check if the user object is valid
+
       if (!user) {
-        throw new Error("User authentication failed. Please try again.");
+        throw new Error('User authentication failed. Please try again.');
       }
-  
-      // Save additional user data to Firestore for signup
-      if (option === "signup") {
+
+      if (option === 'signup') {
         await saveUserToFirestore(user.uid, {
           email,
           username,
-          profileImage: profileImagePreview || "",
+          profileImage: profileImagePreview || '',
         });
       }
-  
+
       toast({
-        title: `${option === "login" ? "Login" : "Signup"} Successful`,
-        description: `Welcome back, ${user.email || "user"}!`,
+        title: `${option === 'login' ? 'Login' : 'Signup'} Successful`,
+        description: `Welcome back, ${user.email || 'user'}!`,
       });
-      router.push("/dashboard");
+      router.push('/account');
     } catch (error) {
-      console.error("Authentication error:", error);
+      console.error('Authentication error:', error);
       toast({
-        title: "Authentication Error",
-        description: (error as Error)?.message || "Something went wrong.",
-        variant: "destructive",
+        title: 'Authentication Error',
+        description: (error as Error)?.message || 'Something went wrong.',
+        variant: 'destructive',
       });
     }
   };
@@ -187,17 +191,19 @@ export default function AuthPage() {
           <Card className="mx-auto max-w-sm">
             <CardHeader>
               <CardTitle className="text-2xl">
-                {option === "login" ? "Login to ScribbleID" : "Sign Up for ScribbleID"}
+                {option === 'login'
+                  ? 'Login to ScribbleID'
+                  : 'Sign Up for ScribbleID'}
               </CardTitle>
               <CardDescription>
-                {option === "login"
-                  ? "Access your account and start collaborating!"
-                  : "Create a new account to unlock all features."}
+                {option === 'login'
+                  ? 'Access your account and start collaborating!'
+                  : 'Create a new account to unlock all features.'}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="grid gap-4">
-                {option === "signup" && (
+                {option === 'signup' && (
                   <div className="grid gap-2">
                     <Label htmlFor="username">Username</Label>
                     <Input
@@ -208,7 +214,9 @@ export default function AuthPage() {
                       onChange={handleUsernameChange}
                       required
                     />
-                    {usernameError && <p className="text-red-500 text-sm">{usernameError}</p>}
+                    {usernameError && (
+                      <p className="text-red-500 text-sm">{usernameError}</p>
+                    )}
                   </div>
                 )}
                 <div className="grid gap-2">
@@ -221,7 +229,9 @@ export default function AuthPage() {
                     onChange={handleEmailChange}
                     required
                   />
-                  {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+                  {emailError && (
+                    <p className="text-red-500 text-sm">{emailError}</p>
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
@@ -232,9 +242,11 @@ export default function AuthPage() {
                     onChange={handlePasswordChange}
                     required
                   />
-                  {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+                  {passwordError && (
+                    <p className="text-red-500 text-sm">{passwordError}</p>
+                  )}
                 </div>
-                {option === "signup" && (
+                {option === 'signup' && (
                   <div className="grid gap-2">
                     <Label htmlFor="confirm-password">Confirm Password</Label>
                     <Input
@@ -245,11 +257,13 @@ export default function AuthPage() {
                       required
                     />
                     {confirmPasswordError && (
-                      <p className="text-red-500 text-sm">{confirmPasswordError}</p>
+                      <p className="text-red-500 text-sm">
+                        {confirmPasswordError}
+                      </p>
                     )}
                   </div>
                 )}
-                {option === "signup" && (
+                {option === 'signup' && (
                   <div className="grid gap-2">
                     <Label htmlFor="profile-image">Profile Picture</Label>
                     <Input
@@ -268,35 +282,37 @@ export default function AuthPage() {
                   </div>
                 )}
                 <Button type="submit" className="w-full">
-                  {option === "login" ? "Login" : "Sign Up"}
+                  {option === 'login' ? 'Login' : 'Sign Up'}
                 </Button>
-                {option === "login" ? (
+                {option === 'login' ? (
                   <>
                     <div className="mt-2 gap-1">
                       <Button className="w-full mb-2" variant="outline">
-                      <FaApple />
+                        <FaApple />
                         Continue with Google
                       </Button>
                       <Button className="w-full" variant="outline">
-                      <FaGoogle />
+                        <FaGoogle />
                         Continue with Apple
                       </Button>
                     </div>
                   </>
                 ) : (
-                  <>
-                  </>
+                  <></>
                 )}
                 <span
-                  onClick={() => navigateToOption(option === "login" ? "signup" : "login")}
+                  onClick={() =>
+                    navigateToOption(option === 'login' ? 'signup' : 'login')
+                  }
                   className="cursor-pointer hover:underline flex flex-col items-center justify-center text-sm"
                 >
-                  {option === "login" ? "Don't have a ScribbleID yet? Create one" : "Already have an account? Login"}
+                  {option === 'login'
+                    ? "Don't have a ScribbleID yet? Create one"
+                    : 'Already have an account? Login'}
                 </span>
               </form>
             </CardContent>
           </Card>
-
         </div>
       </div>
     </ToastProvider>

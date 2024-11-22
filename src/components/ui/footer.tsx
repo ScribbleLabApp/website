@@ -1,74 +1,88 @@
-"use client";
+'use client';
 
-import { ThemeSelector } from "./theme-selector";
-import { LanguageSelector } from "./language-selector";
-import Link from "next/link";
-import { FaGithub, FaInstagram, FaYoutube, FaTwitter, FaTiktok, FaLinkedin } from "react-icons/fa";
+import { ThemeSelector } from './theme-selector';
+import { LanguageSelector } from './language-selector';
+import Link from 'next/link';
+import {
+  FaGithub,
+  FaInstagram,
+  FaYoutube,
+  FaTwitter,
+  FaTiktok,
+  FaLinkedin,
+  FaDiscord,
+} from 'react-icons/fa';
 
 export function Footer() {
   const quickLinks = [
     {
-      category: "Company",
+      category: 'Company',
       links: [
-        { name: "About Us", href: "/about" },
-        { name: "Press & Media", href: "/press" },
-        { name: "Blog", href: "/blog" },
-        { name: "Contact Us", href: "/contact" },
+        { name: 'About Us', href: '/about' },
+        { name: 'Press & Media', href: '/press' },
+        { name: 'Blog', href: '/blog' },
+        { name: 'Contact Us', href: '/contact' },
       ],
     },
     {
-      category: "Resources",
+      category: 'Resources',
       links: [
-        { name: "Documentation", href: "/documentation" },
-        { name: "API Reference", href: "/api-reference" },
-        { name: "FAQs", href: "/faqs" },
-        { name: "Accessibility", href: "/accessibility" },
+        { name: 'Documentation', href: '/documentation' },
+        { name: 'API Reference', href: '/api-reference' },
+        { name: 'FAQs', href: '/faqs' },
+        { name: 'Accessibility', href: '/accessibility' },
       ],
     },
     {
-      category: "Community",
+      category: 'Community',
       links: [
-        { name: "Discord", href: "/discord" },
-        { name: "Forums", href: "/forums" },
-        { name: "Open Source", href: "/opensource" },
+        { name: 'Discord', href: '/discord' },
+        { name: 'Forums', href: '/forums' },
+        { name: 'Open Source', href: '/opensource' },
       ],
     },
     {
-      category: "Products",
+      category: 'Products',
       links: [
-        { name: "ScribbleLab", href: "/products/scribblelab" },
-        { name: "ScribbleLab Pro", href: "/products/scribblelab-pro" },
-        { name: "ScribbleLab for Teams", href: "/products/teams" },
-        { name: "Compare Plans", href: "/products/compare-plans" },
-        { name: "Get Started with ScribbleLab", href: "/products/get-started" },
+        { name: 'ScribbleLab', href: '/products/scribblelab' },
+        { name: 'ScribbleLab Pro', href: '/products/scribblelab-pro' },
+        { name: 'ScribbleLab for Teams', href: '/products/teams' },
+        { name: 'Compare Plans', href: '/products/compare-plans' },
+        {
+          name: 'Get Started with ScribbleLab',
+          href: '/products/get-started',
+        },
       ],
     },
     {
-      category: "Support",
+      category: 'Support',
       links: [
-        { name: "Help Center", href: "/help-center" },
-        { name: "Troubleshooting", href: "/troubleshooting" },
-        { name: "Report a Bug", href: "/report-bug" },
-        { name: "Feature Requests", href: "/feature-requests" },
+        { name: 'Help Center', href: '/help-center' },
+        { name: 'Troubleshooting', href: '/troubleshooting' },
+        { name: 'Report a Bug', href: '/report-bug' },
+        { name: 'Feature Requests', href: '/feature-requests' },
       ],
     },
     {
-      category: "Legal",
+      category: 'Legal',
       links: [
-        { name: "Terms of Use", href: "/legal/terms" },
-        { name: "Privacy Policy", href: "/legal/privacy" },
-        { name: "Cookie Policy", href: "/legal/cookie-policy" },
-        { name: "Licensing", href: "/legal/licensing" },
-        { name: "Security", href: "/legal/security" },
+        { name: 'Terms of Use', href: '/legal/terms' },
+        { name: 'Privacy Policy', href: '/legal/privacy' },
+        { name: 'Cookie Policy', href: '/legal/cookie-policy' },
+        { name: 'Licensing', href: '/legal/licensing' },
+        { name: 'Security', href: '/legal/security' },
       ],
     },
     {
-      category: "Showcase",
+      category: 'Showcase',
       links: [
-        { name: "Customer Stories", href: "/showcase/customer-stories" },
-        { name: "Case Studies", href: "/showcase/case-studies" },
-        { name: "Featured Projects", href: "/showcase/projects" },
-        { name: "Design Gallery", href: "/showcase/design-gallery" },
+        {
+          name: 'Customer Stories',
+          href: '/showcase/customer-stories',
+        },
+        { name: 'Case Studies', href: '/showcase/case-studies' },
+        { name: 'Featured Projects', href: '/showcase/projects' },
+        { name: 'Design Gallery', href: '/showcase/design-gallery' },
       ],
     },
   ];
@@ -80,7 +94,9 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {quickLinks.map((category) => (
             <div key={category.category}>
-              <h3 className="text-lg font-semibold mb-2">{category.category}</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                {category.category}
+              </h3>
               <ul className="space-y-2">
                 {category.links.map((link) => (
                   <li key={link.name}>
@@ -118,6 +134,9 @@ export function Footer() {
             </Link>
             <Link href="https://linkedin.com" aria-label="LinkedIn">
               <FaLinkedin />
+            </Link>
+            <Link href="https://discord.com" aria-label="Discord">
+              <FaDiscord />
             </Link>
           </div>
         </div>
