@@ -117,25 +117,25 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 mt-8">
           <LanguageSelector />
           <div className="flex gap-4 text-lg">
-            <Link href="https://github.com" aria-label="GitHub">
+            <Link href="https://github.com/ScribbleLabApp/" aria-label="GitHub">
               <FaGithub />
             </Link>
-            <Link href="https://instagram.com" aria-label="Instagram">
+            <Link href="https://www.instagram.com/scribblelabappofficial/" aria-label="Instagram">
               <FaInstagram />
             </Link>
-            <Link href="https://youtube.com" aria-label="YouTube">
+            <Link href="https://www.youtube.com/@scribblelabappofficial" aria-label="YouTube">
               <FaYoutube />
             </Link>
-            <Link href="https://twitter.com" aria-label="Twitter">
+            <Link href="https://x.com/scribblelabapp" aria-label="Twitter">
               <FaTwitter />
             </Link>
-            <Link href="https://tiktok.com" aria-label="TikTok">
+            <Link href="https://www.tiktok.com/@scribblelabappofficial" aria-label="TikTok">
               <FaTiktok />
             </Link>
             <Link href="https://linkedin.com" aria-label="LinkedIn">
               <FaLinkedin />
             </Link>
-            <Link href="https://discord.com" aria-label="Discord">
+            <Link href="https://discord.gg/Y5mUJbNC8h" aria-label="Discord">
               <FaDiscord />
             </Link>
           </div>
