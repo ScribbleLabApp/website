@@ -1,18 +1,33 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardHeader, 
+  CardTitle 
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/ui/navbar";
+import { ToastProvider } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import clsx from "clsx";
+import { FaApple, FaGoogle } from "react-icons/fa";
+
+// Import Firebase models
+import { signUp, logIn, getCurrentUser } from "@/lib/models/auth";
+import { saveUserToFirestore } from "@/lib/models/user";
 
 export default function AuthPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const option = searchParams.get("option") || "login";
+
+  // Toast hook for showing success/error messages
+  const { toast } = useToast();
 
   // State for Login and Signup
   const [email, setEmail] = useState("");
@@ -21,6 +36,8 @@ export default function AuthPage() {
   const [username, setUsername] = useState("");
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
+
+  // Validation Errors
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
@@ -30,38 +47,24 @@ export default function AuthPage() {
   // Validation Functions
   const validateEmail = (value: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!value || !emailRegex.test(value)) {
-      setEmailError("Please enter a valid email address.");
-    } else {
-      setEmailError("");
-    }
+    setEmailError(emailRegex.test(value) ? "" : "Please enter a valid email address.");
   };
 
   const validatePassword = (value: string) => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!value || !passwordRegex.test(value)) {
-      setPasswordError(
-        "Password must be at least 8 characters long, include an uppercase letter, a number, and a special character."
-      );
-    } else {
-      setPasswordError("");
-    }
+    setPasswordError(
+      passwordRegex.test(value)
+        ? ""
+        : "Password must be at least 8 characters, include an uppercase letter, a number, and a special character."
+    );
   };
 
   const validateConfirmPassword = (value: string) => {
-    if (value !== password) {
-      setConfirmPasswordError("Passwords do not match.");
-    } else {
-      setConfirmPasswordError("");
-    }
+    setConfirmPasswordError(value === password ? "" : "Passwords do not match.");
   };
 
   const validateUsername = (value: string) => {
-    if (!value || value.length < 3) {
-      setUsernameError("Username must be at least 3 characters long.");
-    } else {
-      setUsernameError("");
-    }
+    setUsernameError(value.length >= 3 ? "" : "Username must be at least 3 characters long.");
   };
 
   // Handlers
@@ -91,22 +94,19 @@ export default function AuthPage() {
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setProfileImage(file);
-    setInvalidFileType(false);
-
     if (file) {
       const fileType = file.type;
       if (fileType === "image/png" || fileType === "image/jpeg") {
+        setProfileImage(file);
+
         const reader = new FileReader();
-        reader.onload = () => {
-          setProfileImagePreview(reader.result as string);
-        };
+        reader.onload = () => setProfileImagePreview(reader.result as string);
         reader.readAsDataURL(file);
       } else {
-        setInvalidFileType(true); // Set invalid file type state if file is not PNG or JPG
-        setProfileImagePreview(null);
+        setInvalidFileType(true);
       }
     } else {
+      setProfileImage(null);
       setProfileImagePreview(null);
     }
   };
@@ -116,15 +116,62 @@ export default function AuthPage() {
     setProfileImagePreview(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    // Perform validation
     validateEmail(email);
     validatePassword(password);
-    validateConfirmPassword(confirmPassword);
-    validateUsername(username);
-
-    if (!emailError && !passwordError && !confirmPasswordError && !usernameError) {
-      console.log("Form submitted with", { email, password, username, profileImage });
+    if (option === "signup") validateConfirmPassword(confirmPassword);
+    if (option === "signup") validateUsername(username);
+  
+    if (emailError || passwordError || confirmPasswordError || usernameError) {
+      toast({
+        title: "Validation Error",
+        description: "Please fix the errors in the form.",
+        variant: "destructive",
+      });
+      return;
+    }
+  
+    try {
+      let user;
+      if (option === "login") {
+        // Login flow
+        const userCredential = await logIn(email, password);
+        user = userCredential.user;
+      } else if (option === "signup") {
+        // Signup flow
+        const userCredential = await signUp(email, password);
+        user = userCredential.user;
+      }
+  
+      // Check if the user object is valid
+      if (!user) {
+        throw new Error("User authentication failed. Please try again.");
+      }
+  
+      // Save additional user data to Firestore for signup
+      if (option === "signup") {
+        await saveUserToFirestore(user.uid, {
+          email,
+          username,
+          profileImage: profileImagePreview || "",
+        });
+      }
+  
+      toast({
+        title: `${option === "login" ? "Login" : "Signup"} Successful`,
+        description: `Welcome back, ${user.email || "user"}!`,
+      });
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Authentication error:", error);
+      toast({
+        title: "Authentication Error",
+        description: (error as Error)?.message || "Something went wrong.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -133,25 +180,44 @@ export default function AuthPage() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        {option === "login" ? (
+    <ToastProvider>
+      <div>
+        <Navbar />
+        <div className="flex flex-col items-center justify-center min-h-screen p-4">
           <Card className="mx-auto max-w-sm">
-            {/* Login Form */}
             <CardHeader>
-              <CardTitle className="text-2xl">Login with ScribbleID</CardTitle>
-              <CardDescription>Login to access files and collaborate with your team using your Scribble ID.</CardDescription>
+              <CardTitle className="text-2xl">
+                {option === "login" ? "Login to ScribbleID" : "Sign Up for ScribbleID"}
+              </CardTitle>
+              <CardDescription>
+                {option === "login"
+                  ? "Access your account and start collaborating!"
+                  : "Create a new account to unlock all features."}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="grid gap-4">
+                {option === "signup" && (
+                  <div className="grid gap-2">
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      id="username"
+                      type="text"
+                      placeholder="Enter your username"
+                      value={username}
+                      onChange={handleUsernameChange}
+                      required
+                    />
+                    {usernameError && <p className="text-red-500 text-sm">{usernameError}</p>}
+                  </div>
+                )}
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
                     placeholder="m@example.com"
-                    value={email || ""}
+                    value={email}
                     onChange={handleEmailChange}
                     required
                   />
@@ -162,121 +228,77 @@ export default function AuthPage() {
                   <Input
                     id="password"
                     type="password"
-                    value={password || ""}
+                    value={password}
                     onChange={handlePasswordChange}
                     required
                   />
                   {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                 </div>
-                <Button type="submit" className="w-full">
-                  Login
-                </Button>
-                <div className="mt-4 text-center text-sm">
-                  Don't have an account?{" "}
-                  <a href="?option=signup" className="underline">
-                    Sign Up
-                  </a>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card className="mx-auto max-w-sm">
-            {/* Signup Form */}
-            <CardHeader>
-              <CardTitle className="text-2xl">Sign Up for ScribbleID</CardTitle>
-              <CardDescription>Create an account to access ScribbleLab features and collaborate with your team.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter your username"
-                    value={username || ""}
-                    onChange={handleUsernameChange}
-                    required
-                  />
-                  {usernameError && <p className="text-red-500 text-sm">{usernameError}</p>}
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    value={email || ""}
-                    onChange={handleEmailChange}
-                    required
-                  />
-                  {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password || ""}
-                    onChange={handlePasswordChange}
-                    required
-                  />
-                  {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="confirm-password">Confirm Password</Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    value={confirmPassword || ""}
-                    onChange={handleConfirmPasswordChange}
-                    required
-                  />
-                  {confirmPasswordError && <p className="text-red-500 text-sm">{confirmPasswordError}</p>}
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="profile-image">Profile Image</Label>
-                  <Input
-                    id="profile-image"
-                    type="file"
-                    onChange={handleProfileImageChange}
-                    accept="image/png, image/jpeg"
-                  />
-                  {invalidFileType && (
-                    <p className="text-red-500 text-sm">Invalid file type. Please upload a PNG or JPEG image.</p>
-                  )}
-                  {profileImagePreview && (
-                    <div className="relative">
+                {option === "signup" && (
+                  <div className="grid gap-2">
+                    <Label htmlFor="confirm-password">Confirm Password</Label>
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={handleConfirmPasswordChange}
+                      required
+                    />
+                    {confirmPasswordError && (
+                      <p className="text-red-500 text-sm">{confirmPasswordError}</p>
+                    )}
+                  </div>
+                )}
+                {option === "signup" && (
+                  <div className="grid gap-2">
+                    <Label htmlFor="profile-image">Profile Picture</Label>
+                    <Input
+                      type="file"
+                      id="profile-image"
+                      accept="image/png, image/jpeg"
+                      onChange={handleProfileImageChange}
+                    />
+                    {profileImagePreview && (
                       <img
                         src={profileImagePreview}
-                        alt="Profile"
-                        className="w-24 h-24 rounded-full object-cover"
+                        alt="Profile Preview"
+                        className="mt-2 h-20 w-20 rounded-full"
                       />
-                      <button
-                        type="button"
-                        className="absolute top-0 right-0 text-white bg-black rounded-full p-1"
-                        onClick={handleRemoveProfileImage}
-                      >
-                        &#x2715;
-                      </button>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                )}
                 <Button type="submit" className="w-full">
-                  Sign Up
+                  {option === "login" ? "Login" : "Sign Up"}
                 </Button>
-                <div className="mt-4 text-center text-sm">
-                  Already have an account?{" "}
-                  <a href="?option=login" className="underline">
-                    Login
-                  </a>
-                </div>
+                {option === "login" ? (
+                  <>
+                    <div className="mt-2 gap-1">
+                      <Button className="w-full mb-2" variant="outline">
+                      <FaApple />
+                        Continue with Google
+                      </Button>
+                      <Button className="w-full" variant="outline">
+                      <FaGoogle />
+                        Continue with Apple
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                  </>
+                )}
+                <span
+                  onClick={() => navigateToOption(option === "login" ? "signup" : "login")}
+                  className="cursor-pointer hover:underline flex flex-col items-center justify-center text-sm"
+                >
+                  {option === "login" ? "Don't have a ScribbleID yet? Create one" : "Already have an account? Login"}
+                </span>
               </form>
             </CardContent>
           </Card>
-        )}
+
+        </div>
       </div>
-    </div>
+    </ToastProvider>
   );
 }
