@@ -19,7 +19,9 @@ export const ConsentBanner = () => {
     const savedConsent = localStorage.getItem('cookieConsent');
     if (savedConsent) {
       setIsVisible(false);
-      setConsent(JSON.parse(savedConsent));
+      const parsedConsent = JSON.parse(savedConsent);
+      setConsent(parsedConsent);
+      applyConsent(parsedConsent);
     }
   }, []);
 

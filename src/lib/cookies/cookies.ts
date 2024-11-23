@@ -1,3 +1,15 @@
+import { getAnalytics, isSupported, logEvent, Analytics } from "firebase/analytics";
+
+let analytics: Analytics | null = null;
+
+isSupported().then((supported) => {
+  if (supported) {
+    analytics = getAnalytics();
+  } else {
+    console.warn('Firebase Analytics is not supported in this environment.');
+  }
+});
+
 export type ConsentOptions = {
   necessary: boolean;
   preferences: boolean;
@@ -12,6 +24,20 @@ const defaultConsent: ConsentOptions = {
   marketing: true,
 };
 
+const createSecureCookie = (
+  name: string,
+  value: string,
+  days: number = 365
+): void => {
+  const expires = new Date();
+  expires.setDate(expires.getDate() + days);
+  document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/; Secure; SameSite=Lax;`;
+};
+
+const removeCookie = (name: string): void => {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure; SameSite=Lax;`;
+};
+
 export const saveConsent = (consent: ConsentOptions): void => {
   localStorage.setItem('cookieConsent', JSON.stringify(consent));
 };
@@ -21,37 +47,32 @@ export const loadConsent = (): ConsentOptions => {
   return savedConsent ? JSON.parse(savedConsent) : defaultConsent;
 };
 
-export const createCookie = (
-  name: string,
-  value: string,
-  days: number = 365
-): void => {
-  const expires = new Date();
-  expires.setDate(expires.getDate() + days);
-  document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/;`;
-};
-
-export const removeCookie = (name: string): void => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-};
-
 export const applyConsent = (consent: ConsentOptions): void => {
   if (consent.statistics) {
-    const { analytics } = require('../firebase');
-    analytics.logEvent('consent_given');
+    if (analytics) {
+      logEvent(analytics, 'consent_given');
+    }
+    createSecureCookie('analytics', 'enabled');
   } else {
     removeCookie('analytics');
   }
 
   if (consent.marketing) {
-    createCookie('marketing', 'enabled');
+    createSecureCookie('marketing', 'enabled');
   } else {
     removeCookie('marketing');
   }
 
   if (consent.preferences) {
-    createCookie('preferences', 'enabled');
+    createSecureCookie('preferences', 'enabled');
   } else {
     removeCookie('preferences');
+  }
+
+  if (consent.necessary) {
+    const sessionData = ''; // SESSTK or other session data if needed
+    createSecureCookie('session', sessionData);
+  } else {
+    removeCookie('session');
   }
 };
