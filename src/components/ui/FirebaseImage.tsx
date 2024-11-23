@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/lib/firebase';
-
-import { Skeleton } from "@/components/ui/skeleton"
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FirebaseImageProps {
   path: string;
@@ -16,15 +13,20 @@ const FirebaseImage: React.FC<FirebaseImageProps> = ({ path, alt, className }) =
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const storageRef = ref(storage, path);
+    if (typeof window !== "undefined") {
+      import("firebase/storage").then(({ getStorage, ref, getDownloadURL }) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, path);
 
-    getDownloadURL(storageRef)
-      .then((url) => {
-        setImageUrl(url);
-      })
-      .catch((error) => {
-        console.error('Error fetching image URL:', error);
+        getDownloadURL(storageRef)
+          .then((url) => {
+            setImageUrl(url);
+          })
+          .catch((error) => {
+            console.error("Error fetching image URL:", error);
+          });
       });
+    }
   }, [path]);
 
   return (
