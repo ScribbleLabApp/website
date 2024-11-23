@@ -34,6 +34,7 @@
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
+    "dompurify": "^3.2.1",
     "firebase": "^11.0.2",
     "input-otp": "^1.4.1",
     "lucide-react": "^0.460.0",
