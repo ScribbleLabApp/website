@@ -1,0 +1,6 @@
+name = "scribblelabapp"
+type = "javascript"
+compatibility_date = "2024-11-22"
+
+[nodejs_compat]
+enabled = true
