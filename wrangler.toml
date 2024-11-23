@@ -1,6 +1,4 @@
 name = "scribblelabapp"
-type = "javascript"
 compatibility_date = "2024-11-22"
-
-[nodejs_compat]
-enabled = true
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
