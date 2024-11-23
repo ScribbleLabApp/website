@@ -1,9 +1,9 @@
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-import { getPerformance } from 'firebase/performance';
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getAnalytics, isSupported as isAnalyticsSupported } from "firebase/analytics";
+import { getPerformance } from "firebase/performance";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -19,7 +19,21 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
-const analytics = getAnalytics(app);
-const perf = getPerformance(app);
+
+let analytics: ReturnType<typeof getAnalytics> | null = null;
+let perf: ReturnType<typeof getPerformance> | null = null;
+
+if (typeof window !== "undefined") {
+  isAnalyticsSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    } else {
+      console.warn("Firebase Analytics is not supported in this environment.");
+    }
+  });
+
+  perf = getPerformance(app);
+}
+
 
 export { app, auth, db, storage, analytics, perf };

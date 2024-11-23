@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = "force-dynamic";
+
 import {
   Card,
   CardContent,
@@ -15,6 +17,8 @@ import { ToastProvider } from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { Suspense } from 'react';
+import type { NextRouter } from 'next/router';
 import { FaApple, FaGoogle } from 'react-icons/fa';
 
 import { signUp, logIn, getCurrentUser } from '@/lib/models/auth';
@@ -22,6 +26,21 @@ import { saveUserToFirestore } from '@/lib/models/user';
 
 export default function AuthPage() {
   const router = useRouter();
+
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <AuthContent router={router} />
+    </Suspense>
+  );
+}
+
+type RouterType = ReturnType<typeof useRouter>;
+
+interface AuthContentProps {
+  router: RouterType;
+}
+
+function AuthContent({ router }: AuthContentProps) {
   const searchParams = useSearchParams();
   const option = searchParams.get('option') || 'login';
 
