@@ -70,13 +70,13 @@ function AuthContent({ router }: AuthContentProps) {
 
   const validatePassword = (value: string) => {
     const passwordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\-_.])[A-Za-z\d@$!%*?&\-_\.]{8,}$/;
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     setPasswordError(
       passwordRegex.test(value)
         ? ''
         : 'Password must be at least 8 characters, include an uppercase letter, a number, and a special character.'
     );
-  };   
+  };
 
   const validateConfirmPassword = (value: string) => {
     setConfirmPasswordError(
