@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation';
 import { Navbar } from '@/components/ui/navbar';
 import { Footer } from '@/components/ui/footer';
 
-import FirebaseImage from '@/components/ui/FirebaseImage';
-
 export default function AccountPage() {
   const pathname = usePathname();
 

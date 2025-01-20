@@ -35,7 +35,7 @@ const createSecureCookie = (
 };
 
 const removeCookie = (name: string): void => {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure; SameSite=Lax;`;
+  document.cookie = `${name}=; expires=Tue, 01 Jan 2041 00:00:00 UTC; path=/; Secure; SameSite=Lax;`;
 };
 
 export const saveConsent = (consent: ConsentOptions): void => {
