@@ -36,7 +36,7 @@ export function Footer() {
     {
       category: 'Community',
       links: [
-        { name: 'Discord', href: '/discord' },
+        { name: 'Discord', href: 'https://discord.gg/Y5mUJbNC8h' },
         { name: 'Forums', href: '/forums' },
         { name: 'Open Source', href: '/opensource' },
       ],
@@ -121,22 +121,22 @@ export function Footer() {
               <FaGithub />
             </Link>
             <Link href="https://www.instagram.com/scribblelabappofficial/" aria-label="Instagram">
-              <FaInstagram />
+              <FaInstagram className='bg-gradient-to-r hover:from-purple-500 hover:via-red-500 hover:to-yellow-500 transition-colors duration-300'/>
             </Link>
             <Link href="https://www.youtube.com/@scribblelabappofficial" aria-label="YouTube">
-              <FaYoutube />
+              <FaYoutube className='hover:text-red-500' />
             </Link>
             <Link href="https://x.com/scribblelabapp" aria-label="Twitter">
-              <FaTwitter />
+              <FaTwitter className='hover:text-blue-400' />
             </Link>
             <Link href="https://www.tiktok.com/@scribblelabappofficial" aria-label="TikTok">
               <FaTiktok />
             </Link>
             <Link href="https://linkedin.com" aria-label="LinkedIn">
-              <FaLinkedin />
+              <FaLinkedin className='hover:text-blue-400'/>
             </Link>
             <Link href="https://discord.gg/Y5mUJbNC8h" aria-label="Discord">
-              <FaDiscord />
+              <FaDiscord className='hover:text-violet-700' />
             </Link>
           </div>
         </div>
