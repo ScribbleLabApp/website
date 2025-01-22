@@ -35,16 +35,6 @@ export default function TermsOfService() {
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen gap-8 font-[family-name:var(--font-geist-sans)]">
       <Navbar />
 
-{/*
-      <main className="container mx-auto px-6 py-8">
-        <MDXProvider components={mdxComponents}>
-          <div className="prose prose-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
-            <TermsContent />
-          </div>
-        </MDXProvider>
-      </main>
-      */}
-
       <main className="container mx-auto px-6 py-8">
         <div className="flex">
           <div className="flex-grow prose prose-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
