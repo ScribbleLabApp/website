@@ -68,7 +68,7 @@ export function Footer() {
       links: [
         { name: 'Terms of Use', href: '/legal/terms' },
         { name: 'Privacy Policy', href: '/legal/privacy' },
-        { name: 'Cookie Policy', href: '/legal/cookie-policy' },
+        { name: 'Cookie Policy', href: '/legal/cookies' },
         { name: 'Licensing', href: '/legal/licensing' },
         { name: 'Security', href: '/legal/security' },
       ],
