@@ -4,7 +4,7 @@ import { MDXProvider } from "@mdx-js/react";
 import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
 import { TableOfContents } from "@/components/ui/toc";
-import TermsContent from "@/data/md/terms-of-service.mdx";
+import PrivacyPolicy from "@/data/md/privacy-policy.mdx";
 import { mdxComponents } from "@/components/mdx";
 
 export default function TermsOfService() {
@@ -16,7 +16,7 @@ export default function TermsOfService() {
         <div className="flex">
           <div className="flex-grow prose prose-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
             <MDXProvider components={mdxComponents}>
-              <TermsContent />
+              <PrivacyPolicy />
             </MDXProvider>
           </div>
           <aside className="hidden lg:block ml-8">
