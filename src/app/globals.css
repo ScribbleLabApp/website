@@ -6,6 +6,26 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@keyframes gradientTransition {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-animation {
+  background: linear-gradient(45deg, #ff7a45, #ff66d3, #5f2b8e);
+  background-size: 400% 400%;
+  animation: gradientTransition 5s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -1,338 +1,300 @@
-'use client';
+"use client";
 
-export const dynamic = "force-dynamic";
+import { motion } from "framer-motion";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Navbar } from '@/components/ui/navbar';
-import { ToastProvider } from '@/components/ui/toast';
-import { useToast } from '@/hooks/use-toast';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import { Suspense } from 'react';
-import type { NextRouter } from 'next/router';
-import { FaApple, FaGoogle } from 'react-icons/fa';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { signUp, logIn, getCurrentUser } from '@/lib/models/auth';
-import { saveUserToFirestore } from '@/lib/models/user';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 
-export default function AuthPage() {
-  const router = useRouter();
+import { ToastProvider } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
+
+import { Navbar } from "@/components/ui/navbar";
+
+import { signUp, logIn } from "@/lib/models/auth"; // Verify Email
+
+// +-------------------------------------------------------------------------------+
+// |                                  Step 1 UI Comp                               |
+// +-------------------------------------------------------------------------------+
+
+export function Step1({ username, updateFormData, handleNext }: any) {
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    updateFormData('username', e.target.value);
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <AuthContent router={router} />
-    </Suspense>
+    <motion.div
+      className="w-full max-w-md text-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card className="p-8 shadow-xl border rounded-xl bg-white/20 backdrop-blur-lg flex flex-col items-center justify-center space-y-4">        
+        <h1 className="text-2xl text-white font-semibold mb-4">Choose Your Username</h1>
+        <Input
+          value={username}
+          onChange={handleUsernameChange}
+          placeholder="Enter a username"
+          required
+          className="w-full text-black p-4 rounded-md border border-gray-300 shadow-sm"
+        />
+        <Button onClick={handleNext} className="mt-4 w-full bg-orange-500 hover:bg-black text-white py-2 rounded-3xl font-semibold">
+          Next
+        </Button>
+      </Card>
+    </motion.div>
   );
 }
 
-type RouterType = ReturnType<typeof useRouter>;
+// +-------------------------------------------------------------------------------+
+// |                                  Step 2 UI Comp                               |
+// +-------------------------------------------------------------------------------+
 
-interface AuthContentProps {
-  router: RouterType;
+export function Step2({
+  email,
+  password,
+  confirmPassword,
+  acceptedTerms,
+  updateFormData,
+  handleNext,
+}: any) {
+  return (
+    <motion.div
+      className="w-full max-w-md text-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h1 className="text-2xl mb-4">Email and Password</h1>
+      <Input
+        value={email}
+        onChange={(e) => updateFormData('email', e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <Input
+        value={password}
+        onChange={(e) => updateFormData('password', e.target.value)}
+        placeholder="Password"
+        type="password"
+        required
+      />
+      <Input
+        value={confirmPassword}
+        onChange={(e) => updateFormData('confirmPassword', e.target.value)}
+        placeholder="Confirm Password"
+        type="password"
+        required
+      />
+      <div className="mt-2">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={acceptedTerms}
+            onChange={(e) => updateFormData('acceptedTerms', e.target.checked)}
+          />
+          <span className="ml-2">I accept the terms and conditions</span>
+        </label>
+      </div>
+      <Button onClick={handleNext} className="mt-4 w-full">
+        Next
+      </Button>
+    </motion.div>
+  );
 }
 
-function AuthContent({ router }: AuthContentProps) {
-  const searchParams = useSearchParams();
-  const option = searchParams.get('option') || 'login';
+// +-------------------------------------------------------------------------------+
+// |                                  Step 3 UI Comp                               |
+// +-------------------------------------------------------------------------------+
 
+export function Step3({ handleNext }: any) {
+  return (
+    <motion.div
+      className="w-full max-w-md text-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h1 className="text-2xl mb-4">Verify Your Email</h1>
+      <p>We've sent a verification link to your email. Please verify it before continuing.</p>
+      <Button onClick={handleNext} className="mt-4 w-full">
+        I've Verified
+      </Button>
+    </motion.div>
+  );
+}
+
+// +-------------------------------------------------------------------------------+
+// |                                  Step 4 UI Comp                               |
+// +-------------------------------------------------------------------------------+
+
+export function Step4({ twoFactorEnabled, updateFormData, handleNext }: any) {
+  return (
+    <motion.div
+      className="w-full max-w-md text-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h1 className="text-2xl mb-4">Add Two-Factor Authentication</h1>
+      <p className="mb-4">Enhance your account security by enabling 2FA. This is optional.</p>
+      <label className="flex items-center justify-center">
+        <input
+          type="checkbox"
+          checked={twoFactorEnabled}
+          onChange={(e) => updateFormData('twoFactorEnabled', e.target.checked)}
+        />
+        <span className="ml-2">Enable 2FA</span>
+      </label>
+      <Button onClick={handleNext} className="mt-4 w-full">
+        Next
+      </Button>
+    </motion.div>
+  );
+}
+
+export function Step5({ avatar, updateFormData, handleFinish }: any) {
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    updateFormData('avatar', file);
+  };
+
+  return (
+    <motion.div
+      className="w-full max-w-md text-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h1 className="text-2xl mb-4">Upload Your Avatar</h1>
+      <Input type="file" accept="image/*" onChange={handleAvatarChange} />
+      {avatar && <p className="mt-2">File uploaded: {avatar.name}</p>}
+      <Button onClick={handleFinish} className="mt-4 w-full">
+        Finish
+      </Button>
+    </motion.div>
+  );
+}
+
+// +-------------------------------------------------------------------------------+
+// |                                  OnboardingFlow                               |
+// +-------------------------------------------------------------------------------+
+
+export default function OnboardingFlow() {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    acceptedTerms: false,
+    twoFactorEnabled: false,
+    avatar: null as File | null,
+  });
+
+  const router = useRouter();
   const { toast } = useToast();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(
-    null
-  );
-
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  const [invalidFileType, setInvalidFileType] = useState(false);
-
-  const validateEmail = (value: string) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    setEmailError(
-      emailRegex.test(value) ? '' : 'Please enter a valid email address.'
-    );
+  const updateFormData = (field: string, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validatePassword = (value: string) => {
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    setPasswordError(
-      passwordRegex.test(value)
-        ? ''
-        : 'Password must be at least 8 characters, include an uppercase letter, a number, and a special character.'
-    );
-  };
-
-  const validateConfirmPassword = (value: string) => {
-    setConfirmPasswordError(
-      value === password ? '' : 'Passwords do not match.'
-    );
-  };
-
-  const validateUsername = (value: string) => {
-    setUsernameError(
-      value.length >= 3 ? '' : 'Username must be at least 3 characters long.'
-    );
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    validateEmail(value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPassword(value);
-    validatePassword(value);
-  };
-
-  const handleConfirmPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    validateConfirmPassword(value);
-  };
-
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setUsername(value);
-    validateUsername(value);
-  };
-
-  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      const fileType = file.type;
-      if (fileType === 'image/png' || fileType === 'image/jpeg') {
-        setProfileImage(file);
-
-        const reader = new FileReader();
-        reader.onload = () => setProfileImagePreview(reader.result as string);
-        reader.readAsDataURL(file);
-      } else {
-        setInvalidFileType(true);
-      }
-    } else {
-      setProfileImage(null);
-      setProfileImagePreview(null);
-    }
-  };
-
-  const handleRemoveProfileImage = () => {
-    setProfileImage(null);
-    setProfileImagePreview(null);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    validateEmail(email);
-    validatePassword(password);
-    if (option === 'signup') validateConfirmPassword(confirmPassword);
-    if (option === 'signup') validateUsername(username);
-
-    if (emailError || passwordError || confirmPasswordError || usernameError) {
+  const handleNext = async () => {
+    if (step === 2 && !formData.acceptedTerms) {
       toast({
-        title: 'Validation Error',
-        description: 'Please fix the errors in the form.',
+        title: 'EULA Not Accepted',
+        description: 'You must accept the terms and conditions to proceed.',
         variant: 'destructive',
       });
       return;
     }
 
-    try {
-      let user;
-      if (option === 'login') {
-        const userCredential = await logIn(email, password);
-        if (userCredential) {
-          user = userCredential.user;
-        }
-      } else if (option === 'signup') {
-        const userCredential = await signUp(email, password);
-        if (userCredential) {
-          user = userCredential.user;
-        }
-      }
-
-      if (!user) {
-        throw new Error('User authentication failed. Please try again.');
-      }
-
-      if (option === 'signup') {
-        await saveUserToFirestore(user.uid, {
-          email,
-          username,
-          profileImage: profileImagePreview || '',
+    if (step === 3) {
+      try {
+        //await verifyEmail(formData.email);
+        toast({ title: 'Verification Email Sent', description: 'Check your inbox.' });
+      } catch (error) {
+        toast({
+          title: 'Error Sending Verification',
+          description: (error as Error)?.message || 'Please try again.',
+          variant: 'destructive',
         });
+        return;
       }
+    }
 
-      toast({
-        title: `${option === 'login' ? 'Login' : 'Signup'} Successful`,
-        description: `Welcome back, ${user.email || 'user'}!`,
-      });
-      router.push('/account');
+    setStep((prev) => prev + 1);
+  };
+
+  const handleFinish = async () => {
+    try {
+      const { email, password, username, avatar } = formData;
+      const userCredential = await signUp(email, password);
+
+      if (avatar) {}
+
+      router.push('/');
     } catch (error) {
-      console.error('Authentication error:', error);
       toast({
-        title: 'Authentication Error',
-        description: (error as Error)?.message || 'Something went wrong.',
+        title: 'Signup Error',
+        description: (error as Error)?.message || 'Please try again.',
         variant: 'destructive',
       });
     }
   };
 
-  const navigateToOption = (newOption: string) => {
-    router.push(`?option=${newOption}`);
+  const renderStep = () => {
+    switch (step) {
+      case 1: return (
+          <Step1
+            username={formData.username}
+            updateFormData={updateFormData}
+            handleNext={handleNext}
+          />
+        );
+      case 2: return (
+        <Step2
+          email={formData.email}
+          password={formData.password}
+          confirmPassword={formData.confirmPassword}
+          acceptedTerms={formData.acceptedTerms}
+          updateFormData={updateFormData}
+          handleNext={handleNext}
+        />
+      );
+      case 3: return <Step3 handleNext={handleNext} />;
+      case 4: return (
+        <Step4
+          twoFactorEnabled={formData.twoFactorEnabled}
+          updateFormData={updateFormData}
+          handleNext={handleNext}
+        />
+      );
+      case 5: return (
+        <Step5
+          avatar={formData.avatar}
+          updateFormData={updateFormData}
+          handleFinish={handleFinish}
+        />
+      );
+      default: return <p>Something went wrong!</p>;
+    }
   };
 
   return (
     <ToastProvider>
-      <div>
-        <Navbar />
-        <div className="flex flex-col items-center justify-center min-h-screen p-4">
-          <Card className="mx-auto max-w-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl">
-                {option === 'login'
-                  ? 'Login to ScribbleID'
-                  : 'Sign Up for ScribbleID'}
-              </CardTitle>
-              <CardDescription>
-                {option === 'login'
-                  ? 'Access your account and start collaborating!'
-                  : 'Create a new account to unlock all features.'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="grid gap-4">
-                {option === 'signup' && (
-                  <div className="grid gap-2">
-                    <Label htmlFor="username">Username</Label>
-                    <Input
-                      id="username"
-                      type="text"
-                      placeholder="Enter your username"
-                      value={username}
-                      onChange={handleUsernameChange}
-                      required
-                    />
-                    {usernameError && (
-                      <p className="text-red-500 text-sm">{usernameError}</p>
-                    )}
-                  </div>
-                )}
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    value={email}
-                    onChange={handleEmailChange}
-                    required
-                  />
-                  {emailError && (
-                    <p className="text-red-500 text-sm">{emailError}</p>
-                  )}
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    required
-                  />
-                  {passwordError && (
-                    <p className="text-red-500 text-sm">{passwordError}</p>
-                  )}
-                </div>
-                {option === 'signup' && (
-                  <div className="grid gap-2">
-                    <Label htmlFor="confirm-password">Confirm Password</Label>
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      value={confirmPassword}
-                      onChange={handleConfirmPasswordChange}
-                      required
-                    />
-                    {confirmPasswordError && (
-                      <p className="text-red-500 text-sm">
-                        {confirmPasswordError}
-                      </p>
-                    )}
-                  </div>
-                )}
-                {option === 'signup' && (
-                  <div className="grid gap-2">
-                    <Label htmlFor="profile-image">Profile Picture</Label>
-                    <Input
-                      type="file"
-                      id="profile-image"
-                      accept="image/png, image/jpeg"
-                      onChange={handleProfileImageChange}
-                    />
-                    {profileImagePreview && (
-                      <img
-                        src={profileImagePreview}
-                        alt="Profile Preview"
-                        className="mt-2 h-20 w-20 rounded-full"
-                      />
-                    )}
-                  </div>
-                )}
-                <Button type="submit" className="w-full">
-                  {option === 'login' ? 'Login' : 'Sign Up'}
-                </Button>
-                {option === 'login' ? (
-                  <>
-                    <div className="mt-2 gap-1">
-                      <Button className="w-full mb-2" variant="outline">
-                        <FaApple />
-                        Continue with Google
-                      </Button>
-                      <Button className="w-full" variant="outline">
-                        <FaGoogle />
-                        Continue with Apple
-                      </Button>
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
-                <span
-                  onClick={() =>
-                    navigateToOption(option === 'login' ? 'signup' : 'login')
-                  }
-                  className="cursor-pointer hover:underline flex flex-col items-center justify-center text-sm"
-                >
-                  {option === 'login'
-                    ? "Don't have a ScribbleID yet? Create one"
-                    : 'Already have an account? Login'}
-                </span>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 blur-3xl opacity-20"></div>
+      <Navbar />
+      <div className="min-h-screen flex items-center justify-center p-4">
+        {renderStep()}
       </div>
     </ToastProvider>
   );
