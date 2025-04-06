@@ -1,0 +1,66 @@
+[
+  {
+    "category": "Company",
+    "links": [
+      { "name": "About Us", "href": "/" },
+      { "name": "Press & Media", "href": "/" },
+      { "name": "Blog", "href": "/" },
+      { "name": "Contact Us", "href": "/" }
+    ]
+  },
+  {
+    "category": "Resources",
+    "links": [
+      { "name": "Documentation", "href": "/" },
+      { "name": "API Reference", "href": "/" },
+      { "name": "FAQs", "href": "/" },
+      { "name": "Accessibility", "href": "/" }
+    ]
+  },
+  {
+    "category": "Community",
+    "links": [
+      { "name": "Discord", "href": "https://discord.gg/Y5mUJbNC8h" },
+      { "name": "Forums", "href": "/" },
+      { "name": "Open Source", "href": "/opensource" }
+    ]
+  },
+  {
+    "category": "Products",
+    "links": [
+      { "name": "ScribbleLab", "href": "/" },
+      { "name": "ScribbleLab Pro", "href": "/" },
+      { "name": "ScribbleLab for Teams", "href": "/" },
+      { "name": "Compare Plans", "href": "/" },
+      { "name": "Get Started with ScribbleLab", "href": "/" }
+    ]
+  },
+  {
+    "category": "Support",
+    "links": [
+      { "name": "Help Center", "href": "/" },
+      { "name": "Troubleshooting", "href": "/" },
+      { "name": "Report a Bug", "href": "/" },
+      { "name": "Feature Requests", "href": "/" }
+    ]
+  },
+  {
+    "category": "Legal",
+    "links": [
+      { "name": "Terms of Use", "href": "/" },
+      { "name": "Privacy Policy", "href": "/" },
+      { "name": "Cookie Policy", "href": "/" },
+      { "name": "Licensing", "href": "/" },
+      { "name": "Security", "href": "/" }
+    ]
+  },
+  {
+    "category": "Showcase",
+    "links": [
+      { "name": "Customer Stories", "href": "/" },
+      { "name": "Case Studies", "href": "/" },
+      { "name": "Featured Projects", "href": "/" },
+      { "name": "Design Gallery", "href": "/" }
+    ]
+  }
+]

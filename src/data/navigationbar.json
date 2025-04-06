@@ -1,0 +1,63 @@
+[
+    {
+      "category": "Products",
+      "links": [
+        { "name": "ScribbleLab", "href": "/", "desc": "A powerful note-taking app that's features goes way beyond." },
+        { "name": "ScribbleClassroom", "href": "/", "desc": "Tools and resources for educators and students." },
+        { "name": "ScribbleLinguist", "href": "/", "desc": "Tools and resources for educators and students." },
+        { "name": "Focusly", "href": "/", "desc": ""},
+        { "name": "Get Started with ScribbleLab", "href": "/", "desc": "Learn how to begin using ScribbleLab effectively." }
+      ]
+    },
+    {
+        "category": "Technology",
+        "links": [
+          { "name": "Scribble Collab", "href": "/", "desc": "A powerful note-taking app that's features goes way beyond." },
+          { "name": "Scribble Mirror Kit ", "href": "/", "desc": "Collaborative tools designed for team productivity." },
+          { "name": "ScribbleEditorKit Extensions ", "href": "/", "desc": "Tools and resources for educators and students." }
+          ]
+      },
+    {
+      "category": "Learn",
+      "links": [
+        { "name": "Documentation", "href": "/", "desc": "Explore detailed guides and feature explanations." },
+        { "name": "Tutorials", "href": "/", "desc": "Follow step-by-step instructions to get started." },
+        { "name": "Blog", "href": "/", "desc": "" },
+        { "name": "FAQs", "href": "/", "desc": "" },
+        { "name": "Accessibility", "href": "/", "desc": "" }
+      ]
+    },
+    {
+      "category": "Pricing",
+      "links": [
+        { "name": "Starter", "href": "/pricing", "desc": "Access ScribbleLab for free with core features." },
+        { "name": "Pro", "href": "/pricing", "desc": "Unlock advanced features for power users." },
+        { "name": "Enterprise", "href": "/pricing", "desc": "For teams in large organizations who want to scale their notes and planning while optimizing costs." },
+        { "name": "Education", "href": "/", "desc": "Exclusive pricing for verified students." },
+        { "name": "Non-Profit", "href": "/", "desc": "" },
+        { "name": "Compare Plans", "href": "/", "desc": "" },
+        { "name": "Institutional Solutions", "href": "/", "desc": "" }
+      ]
+    },
+    {
+      "category": "Developer",
+      "links": [
+        { "name": "API Reference", "href": "/", "desc": "" },
+        { "name": "API Changelog", "href": "/", "desc": "" },
+        { "name": "API Status", "href": "/", "desc": "" },
+        { "name": "Integrations", "href": "/", "desc": "" },
+        { "name": "SDKs", "href": "/", "desc": "" },
+        { "name": "Guides", "href": "/", "desc": "" }
+      ]
+    },
+    {
+      "category": "Support",
+      "links": [
+        { "name": "Help Center", "href": "/", "desc": "" },
+        { "name": "Troubleshooting", "href": "/", "desc": "" },
+        { "name": "Report a Bug", "href": "/", "desc": "" },
+        { "name": "Feature Requests", "href": "/", "desc": "" },
+        { "name": "Contact Us", "href": "/", "desc": "" }
+      ]
+    }
+  ]
