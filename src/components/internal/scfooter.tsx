@@ -41,6 +41,16 @@ export function SCFooter() {
 
         {/* Language Selector and Social Media Links Section */}
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 mt-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 text-sm text-muted-foreground">
+            <span>
+              To view the latest ScribbleLabApp developments, visit{" "}
+              <Link href="" className="text-orange-400">
+                <strong>our roadmap</strong>
+              </Link>
+              .
+            </span>
+          </div>
+
           <div className="flex gap-4 text-lg">
             <Link href="https://github.com/ScribbleLabApp/" aria-label="GitHub">
               <FaGithub />
@@ -82,8 +92,8 @@ export function SCFooter() {
           {/* Copyright and Theme Selector */}
           <div className="flex flex-col md:flex-row md:items-center gap-4 text-sm text-muted-foreground">
             <span>
-              © 2024 - {new Date().getFullYear()} ScribbleLab LLC. All rights
-              reserved.
+              Copyright © 2024 - {new Date().getFullYear()} ScribbleLab LLC.
+              All rights reserved.
             </span>
           </div>
           {/* Theme Selector */}

@@ -1,28 +1,27 @@
 "use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-  } from '@/components/ui/navigation-menu';
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
-  import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
-  import { LuMenu, LuX } from "react-icons/lu";
+import { LuMenu, LuX } from "react-icons/lu";
 
-  import navigarionLinks from "@/data/navigationbar.json";
-
+import navigarionLinks from "@/data/navigationbar.json";
 
 const ListItem = React.forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -30,8 +29,8 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            className
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className,
           )}
           {...props}
         >
@@ -44,7 +43,7 @@ const ListItem = React.forwardRef<
     </li>
   );
 });
-ListItem.displayName = 'ListItem';
+ListItem.displayName = "ListItem";
 
 export function SCNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -75,7 +74,9 @@ export function SCNavbar() {
             <NavigationMenuList>
               {navigarionLinks.map((category) => (
                 <NavigationMenuItem key={category.category}>
-                  <NavigationMenuTrigger>{category.category}</NavigationMenuTrigger>
+                  <NavigationMenuTrigger>
+                    {category.category}
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-4 md:w-[400px]">
                       {category.links.map((item) => (
