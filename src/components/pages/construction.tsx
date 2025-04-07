@@ -14,12 +14,12 @@ export default function SCConstructionPage() {
       <h1 className="text-4xl font-bold mb-4">
         We're Building Something Amazing!
       </h1>
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 dark:text-neutral-400 mb-6">
         Our site is currently under construction. Stay tuned — we’ll be
         launching soon!
       </p>
       <Link href="/community">
-        <Button className="border bg-transparent hover:bg-transparent border-black hover:border-orange-400 dark:border-white text-black dark:text-white hover:text-orange-400 px-12 py-6 rounded-full transition">
+        <Button className="border bg-transparent hover:bg-transparent border-black hover:border-orange-400 dark:hover:border-orange-400 dark:border-white text-black dark:text-white hover:text-orange-400 dark:hover:text-orange-400 px-12 py-6 rounded-full transition">
           <strong>Join Our Community</strong>
         </Button>
       </Link>

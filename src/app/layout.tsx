@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PostHogProvider } from "../components/PostHogProvider";
 
+import { SCThemeProvider } from "@/components/theme-provider";
+
 import { SCConsentBanner } from "@/components/internal/sccookiebanner";
 
 const geistSans = Geist({
@@ -47,12 +49,19 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <PostHogProvider>{children}</PostHogProvider>
-        <SCConsentBanner />
+        <SCThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <PostHogProvider>{children}</PostHogProvider>
+          <SCConsentBanner />
+        </SCThemeProvider>
       </body>
     </html>
   );
