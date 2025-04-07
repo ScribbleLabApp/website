@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { set } from "react-hook-form";
 
 export default function SCColorSchemeToggle() {
   const [toggleValue, setToggleValue] = useState<"light" | "dark" | "auto">(
@@ -13,11 +14,14 @@ export default function SCColorSchemeToggle() {
     const stored = window.localStorage.getItem("colorScheme");
     if (stored === "light" || stored === "dark" || stored === "auto") {
       setToggleValue(stored);
+    } else {
+        setToggleValue("auto");
     }
   }, []);
 
   useEffect(() => {
-    setTheme(toggleValue);
+    const theme = toggleValue === "auto" ? "system" : toggleValue;
+    setTheme(theme);
     window.localStorage.setItem("colorScheme", toggleValue);
   }, [toggleValue, setTheme]);
 
