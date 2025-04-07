@@ -11,6 +11,8 @@ import {
   FaDiscord,
 } from "react-icons/fa";
 
+import SCColorSchemeToggle from "./sccolorschemetoggle";
+
 import quickLinks from "@/data/footer.json";
 
 export function SCFooter() {
@@ -97,6 +99,7 @@ export function SCFooter() {
             </span>
           </div>
           {/* Theme Selector */}
+          <SCColorSchemeToggle />
         </div>
       </div>
     </footer>
