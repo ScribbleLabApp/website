@@ -1,0 +1,37 @@
+{
+    "host": "https://scribblelabapp.pages.dev",
+    "title": "ScribbleLabApp",
+    "description": "",
+    "repositoryUrl": "https://github.com/ScribbleLabApp/",
+    "twitter": "@ScribbleLabApp",
+    "pages": {
+      "/": {
+        "title": "Overview",
+        "description": "A lightweight, natively built editor. Open source. Free forever."
+      }
+    },
+    "links": {
+      "githubOrg": "https://github.com/ScribbleLabApp",
+      "githubRepo": "https://github.com/ScribbleLabApp/ScribbleLab",
+      "githubProject": "https://github.com/orgs/ScribbleLabApp/projects/3/views/1",
+      "githubSponsor": "https://github.com/sponsors/ScribbleLabApp",
+      "twitter": "https://twitter.com/ScribbleLabApp",
+      "discord": "https://discord.gg/",
+      "license": "https://github.com/ScribbleLabApp/ScribbleLabApp/blob/main/LICENSE.md"
+    },
+    "navigation": [
+      "/"
+    ],
+    "categories": {
+      "updates": {
+      "title": "Updates",
+      "longTitle": "Latest Updates",
+      "description": "All the latest updates"
+    },
+    "name": {
+      "title": "Name",
+      "longTitle": "Full Name",
+      "description": "Description"
+    }
+    }
+  }

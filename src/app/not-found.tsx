@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { headers } from "next/headers";
 
-import { SCNavbar } from "@/components/internal/scnavbar";
-import { SCFooter } from "@/components/internal/scfooter";
-
 export default function NotFound() {
   return (
     <div className="relative min-h-screen bg-[#f9f6f1] flex flex-col justify-center items-center overflow-hidden">
-      <SCNavbar />
       <main className="flex flex-col justify-center items-center overflow-hidden">
         {/* Illustration */}
 
@@ -22,8 +18,6 @@ export default function NotFound() {
           <strong>Back to Homepage</strong>
         </Link>
       </main>
-
-      <SCFooter />
     </div>
   );
 }

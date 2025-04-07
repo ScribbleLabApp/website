@@ -15,7 +15,7 @@ export default function SCColorSchemeToggle() {
     if (stored === "light" || stored === "dark" || stored === "auto") {
       setToggleValue(stored);
     } else {
-        setToggleValue("auto");
+      setToggleValue("auto");
     }
   }, []);
 

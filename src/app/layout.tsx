@@ -6,6 +6,8 @@ import { PostHogProvider } from "../components/PostHogProvider";
 import { SCThemeProvider } from "@/components/theme-provider";
 
 import { SCConsentBanner } from "@/components/internal/sccookiebanner";
+import { SCFooter } from "@/components/internal/scfooter";
+import { SCNavbar } from "@/components/internal/scnavbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,8 +61,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SCNavbar />
           <PostHogProvider>{children}</PostHogProvider>
           <SCConsentBanner />
+          <SCFooter />
         </SCThemeProvider>
       </body>
     </html>
